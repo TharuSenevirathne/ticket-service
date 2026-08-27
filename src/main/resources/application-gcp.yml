@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${CLOUD_SQL_HOST:35.240.167.22}:5432/ticket-service?useSSL=true&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+
+gcp:
+  project-id: ${GCP_PROJECT_ID:eca-attachment-service}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+
+management:
+  endpoint:
+    health:
+      group:
+        readiness:
+          include: readinessState,db,discoveryComposite
+
