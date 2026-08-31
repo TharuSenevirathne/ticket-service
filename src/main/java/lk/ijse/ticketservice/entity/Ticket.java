@@ -2,10 +2,18 @@ package lk.ijse.ticketservice.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tickets")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket {
 
     @Id
@@ -13,26 +21,45 @@ public class Ticket {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false, length = 200)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    private String status = "OPEN";          // OPEN, IN_PROGRESS, CLOSED
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Status status;
 
-    private Long userId;                     // simple reference to the user who created it
+    private Long userId;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String priority;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    private Long assignedTo;
+
+    private String category;
+
+    @Column(name = "resolved_at")
+    private LocalDateTime resolvedAt;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (status == null) {
+            status = Status.OPEN;
+        }
+    }
+
+    public enum Status {
+        OPEN,
+        IN_PROGRESS,
+        RESOLVED,
+        CLOSED,
+        REOPENED
+    }
 }

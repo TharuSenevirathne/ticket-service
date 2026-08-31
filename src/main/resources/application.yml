@@ -1,54 +1,10 @@
-server:
-  port: 8082
-
 spring:
   application:
     name: ticket-service
+
   config:
-    import: optional:configserver:http://localhost:8888
-  datasource:
-    url: jdbc:postgresql://35.240.167.22:5432/ticket-service?useSSL=true&allowPublicKeyRetrieval=true
-    username: postgres
-    password: ${DB_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
+    import: "configserver:"
 
-gcp:
-  project-id: ${GCP_PROJECT_ID:eca-attachment-service}
-  firestore:
-    collection: order-audit-logs
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
-    health-check-url-path: /actuator/health
-    status-page-url-path: /actuator/info
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-      base-path: /actuator
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true
-      group:
-        liveness:
-          include: livenessState,ping
-        readiness:
-          include: readinessState,db,discoveryComposite
-  health:
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
-    db:
-      enabled: true
+  cloud:
+    config:
+      uri: http://localhost:9000
