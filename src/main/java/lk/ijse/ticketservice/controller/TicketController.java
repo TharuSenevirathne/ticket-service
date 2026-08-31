@@ -40,13 +40,6 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getByUserId(userId));
     }
 
-    @PutMapping("/{id}/status")
-    public ResponseEntity<TicketResponseDTO> updateStatus(
-            @PathVariable Long id,
-            @RequestParam Ticket.Status status) {
-        return ResponseEntity.ok(ticketService.updateStatus(id, status));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<TicketResponseDTO> updateTicket(
             @PathVariable Long id,

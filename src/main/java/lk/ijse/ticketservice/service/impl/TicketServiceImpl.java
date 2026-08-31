@@ -90,21 +90,6 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketResponseDTO updateStatus(Long id, Ticket.Status status) {
-        Ticket ticket = ticketRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id: " + id));
-
-        ticket.setStatus(status);
-        if (status == Ticket.Status.RESOLVED || status == Ticket.Status.CLOSED) {
-            ticket.setResolvedAt(LocalDateTime.now());
-        } else if (status == Ticket.Status.REOPENED) {
-            ticket.setResolvedAt(null);
-        }
-
-        return mapToResponse(ticketRepository.save(ticket));
-    }
-
-    @Override
     public void deleteTicket(Long id) {
         if (!ticketRepository.existsById(id)) {
             throw new ResourceNotFoundException("Ticket not found with id: " + id);

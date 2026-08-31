@@ -12,7 +12,6 @@ public interface TicketService {
     List<TicketResponseDTO> getAll();
     TicketResponseDTO getTicketById(Long id);
     List<TicketResponseDTO> getByUserId(Long userId);
-    TicketResponseDTO updateStatus(Long id, Ticket.Status status);
     TicketResponseDTO updateTicket(Long id, TicketUpdateDTO request);
     void deleteTicket(Long id);
 }
