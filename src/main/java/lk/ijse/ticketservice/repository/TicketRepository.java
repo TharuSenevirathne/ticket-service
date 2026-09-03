@@ -8,5 +8,13 @@ import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
+
+    List<Ticket> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            String title,
+            String description
+    );
+
     List<Ticket> findByUserId(Long userId);
+
+    List<Ticket> findByStatus(Ticket.Status status);
 }

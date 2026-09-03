@@ -1,6 +1,7 @@
 package lk.ijse.ticketservice.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -17,5 +18,8 @@ public class TicketRequestDTO {
 
     @Size(max = 5000, message = "Description must not exceed 5000 characters")
     private String description;
+
+    @NotNull(message = "User ID is required")
+    private Long userId;
 
 }

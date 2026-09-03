@@ -2,18 +2,21 @@ package lk.ijse.ticketservice.service;
 
 import lk.ijse.ticketservice.dto.TicketRequestDTO;
 import lk.ijse.ticketservice.dto.TicketResponseDTO;
-import lk.ijse.ticketservice.dto.TicketUpdateDTO;
-import lk.ijse.ticketservice.entity.Ticket;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TicketService {
-    TicketResponseDTO create(TicketRequestDTO request);
-    List<TicketResponseDTO> getAll();
-    TicketResponseDTO getTicketById(Long id);
-    List<TicketResponseDTO> getByUserId(Long userId);
-    TicketResponseDTO updateTicket(Long id, TicketUpdateDTO request);
+
+    TicketResponseDTO createTicket(TicketRequestDTO request);
+
+    Optional<TicketResponseDTO> findById(Long id);
+
+    List<TicketResponseDTO> getAllTickets();
+
+    List<TicketResponseDTO> searchTickets(String keyword);
+
+    TicketResponseDTO updateTicket(Long id, TicketRequestDTO request);
+
     void deleteTicket(Long id);
 }
-
-
